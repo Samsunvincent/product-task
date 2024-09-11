@@ -113,19 +113,19 @@ app.put('/user',
 
 app.delete('/user',
     async (req,res)=>{
-        let id = req.query.id
+        try {
+            let id = req.query.id
         
         let _id = new ObjectId(id);
         console.log("_id : ",_id);   
         
         let delete_data = await product.deleteOne({_id});
         console.log("delete data",delete_data)
-
-        if(delete_data){
-            res.status(200).send('deleted your profile')
-        }
-        else{
-            res.status(404).send("deletion failed")
+        
+        res.status(200).send(delete_data)
+        
+        } catch (error) {
+            console.log("error",error)
         }
     }
 )
