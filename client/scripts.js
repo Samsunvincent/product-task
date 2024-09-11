@@ -71,7 +71,9 @@ async function viewdata(event){
         <div>${parsed_response[i].name}</div>
         <div>${parsed_response[i].price}</div>
         <div><button onclick ="handleclick('${parsed_response[i]._id}')">view more</button></div>
-        <div><button onclick ="updateclick('${parsed_response[i]._id}')">view more</button></div>
+        <div><button onclick ="updateclick('${parsed_response[i]._id}')">update</button></div>
+        <div><button onclick ="deleteclick('${parsed_response[i]._id}')">delete</button></div>
+
         
         `
     }
@@ -120,8 +122,50 @@ async function singledata(){
 function updateclick(id){
     window.location = `update.html?id=${id}`
 }
+async function update(){
+ 
+    let location = window.location
+    let querystring = location.search
+    let url_params = new URLSearchParams(querystring);
+  
+  
+    let id = url_params.get('id');
+    console.log('id from update',id);
+  
+    try {
+      let response = await fetch(`/user?id=${id}`);
+      let user = await response.json();
+  
+  
+      console.log("user details form update",user)
+  
+  
+      let name  = document.getElementById('name');
+      name.value = user.name;
+  
+  
+      let email = document.getElementById('email');
+      email.value = user.email;
+  
+  
+      let phone = document.getElementById('phone');
+      phone.value = user.phone;
+  
+  
+      let password = document.getElementById('password');
+      password.value = user.password;
+  
+  
+      
+      
+    } catch (error) {
+      console.log("error",error)
+    }
+  
+  
+  }
 
-async function update(event){
+async function editeddata(event){
 
     event.preventDefault();
 
