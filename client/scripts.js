@@ -68,11 +68,24 @@ async function viewdata(event) {
 
         for (i = 0; i < parsed_response.length; i++) {
             rows += `
-        <div>${parsed_response[i].name}</div>
-        <div>${parsed_response[i].price}</div>
-        <div><button onclick ="handleclick('${parsed_response[i]._id}')">view more</button></div>
-        <div><button onclick ="deleteclick('${parsed_response[i]._id}')">delete</button></div>
-
+        
+        
+       
+            
+               
+            <div class="card card-block text-center ">
+            <div>
+                <img src="${parsed_response[i].image}"style="width:348px;height:300px;" alt="shoe"  onclick ="handleclick('${parsed_response[i]._id}')">
+                    <h5 class="card-title  fw-bold fs-3 pt-3"  onclick ="handleclick('${parsed_response[i]._id}')">${parsed_response[i].name}</h5>
+                    <p class=""  onclick ="handleclick('${parsed_response[i]._id}')">${parsed_response[i].description}</p>
+                    <h5 class="card-title pb-3"  onclick ="handleclick('${parsed_response[i]._id}')"> $${parsed_response[i].price}</h5>
+                    <div class="d-flex justify-content-between px-5 pb-4"> 
+                        <div class=" px-3"><button class="w-100" onclick ="handleclick('${parsed_response[i]._id}')">view more</button></div>
+                        <div><button onclick ="deleteclick('${parsed_response[i]._id}')">delete</button></div>
+                    </div>
+                </div>
+            </div>
+              
         
         `
         }
@@ -104,13 +117,17 @@ async function singledata() {
         let container = document.getElementById('container');
 
         let row = `
-            <div>${parsed_response.name}</div>
-            <div>${parsed_response.price}</div>
-           <div>${parsed_response.category}</div>
-            <div>${parsed_response.use}</div>
-            <div>${parsed_response.description}</div>
-            <div><img src="${parsed_response.image}" alt="Image"></div>
-            <div><button onclick ="updateclick('${parsed_response._id}')">update</button></div>
+        <div class=" container d-flex pt-5 justify-content-center align-items-center border border-4 p-5 pt-5 bg-light">
+            <div><img src="${parsed_response.image} " style="width:548px;height:500px;" alt="Image"></div>
+            <div class="px-5 text-center">
+                <div  class="fs-1 px-5 fw-bold text-center">${parsed_response.name}</div>
+                <div class="fw-bold link-danger"> $. ${parsed_response.price}</div>
+                <div class="">${parsed_response.category}</div>
+                <div class="">${parsed_response.use}</div>
+                <div class="">${parsed_response.description}</div>
+                <div><button onclick ="updateclick('${parsed_response._id}')">update</button></div>
+            </div>
+        </div>
 
         `;
 
@@ -124,6 +141,8 @@ function updateclick(id) {
     window.location = `update.html?id=${id}`
 }
 async function update() {
+
+   
 
     let location = window.location
     let querystring = location.search
@@ -145,16 +164,24 @@ async function update() {
         name.value = user.name;
 
 
-        let email = document.getElementById('email');
-        email.value = user.email;
+        let image = document.getElementById('image');
+        image.value = user.image;
 
 
-        let phone = document.getElementById('phone');
-        phone.value = user.phone;
+        let category = document.getElementById('category');
+        category.value = user.category;
 
 
-        let password = document.getElementById('password');
-        password.value = user.password;
+        let use = document.getElementById('use');
+        use.value = user.use;
+
+        let description = document.getElementById('description');
+        description.value = user.description;
+        
+        let price = document.getElementById('price');
+        price.value = user.price;
+
+         
 
 
 
@@ -208,10 +235,25 @@ async function editeddata(event) {
         let parsed_response = await response.json();
         console.log('parsed_response', parsed_response);
 
+        if(parsed_response){
+            alert("data updated successfully")
+        }
+        else{
+            alert("updation failed")
+        }
+       
+        window.location = 'single-product.html'
+
+        
+        
+       
+
     } catch (error) {
         console.log("error", error);
     }
 }
+
+//delete function
 
 async function deleteclick(id){
     console.log("id from delete",id);
@@ -222,13 +264,15 @@ async function deleteclick(id){
         let parsed_response = await response.json();
         console.log("parsed_response", parsed_response);
         
-        window.location = `view-product.html`;
+        window.location = `view-product.html`
 
         if(response.status === 200){
             alert("deleted sucessfully")
         }else{
             alert("deletion failed")
         }
+   
+
         
       } catch (error) {
         console.log("error", error);
