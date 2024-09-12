@@ -59,10 +59,10 @@ app.get('/submit',
         res.status(200).send(users_data);
         return;
 })
-app.get('/user',
+app.get('/user/:id',
     async (req,res)=>{
         
-        let id = req.query.id;
+        let id = req.params.id;
         console.log("id",id)
         
         let user_data = await product.findOne({_id:id});
@@ -80,7 +80,7 @@ app.get('/user',
 )
 
 
-app.put('/user',
+app.put('/user/:id',
     async (req,res)=>{
         let body = req.body;
         console.log('body from put',body);
@@ -97,12 +97,10 @@ app.put('/user',
         console.log("data",data);
 
         
-        let id = req.query.id
-        
-        let _id = new ObjectId(id);
-        console.log("_id : ",_id);
+        let id = req.params.id
+      
 
-        let user_data = await product.updateOne({_id},{$set:data});
+        let user_data = await product.updateOne({_id:id},{$set:data});
         console.log("user_data",user_data)
 
         res.status(200).send(user_data)
@@ -111,15 +109,13 @@ app.put('/user',
     }
 )
 
-app.delete('/user',
+app.delete('/user/:id',
     async (req,res)=>{
         try {
-            let id = req.query.id
+            let id = req.params.id
+         
         
-        let _id = new ObjectId(id);
-        console.log("_id : ",_id);   
-        
-        let delete_data = await product.deleteOne({_id});
+        let delete_data = await product.deleteOne({_id:id});
         console.log("delete data",delete_data)
         
         res.status(200).send(delete_data)

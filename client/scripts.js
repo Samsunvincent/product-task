@@ -109,7 +109,7 @@ async function singledata() {
 
 
     try {
-        let response = await fetch(`/user?id=${id}`)
+        let response = await fetch(`/user/${id}`)
         let parsed_response = await response.json()
         console.log('parsed_response', parsed_response, typeof (parsed_response));
         // console.log(parsed_response.name, 'name');
@@ -224,7 +224,7 @@ async function editeddata(event) {
     console.log("id from update data", id);
 
     try {
-        let response = await fetch(`/user?id=${id}`, {
+        let response = await fetch(`/user/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -259,7 +259,7 @@ async function deleteclick(id){
     console.log("id from delete",id);
 
     try {
-        let response = await fetch(`/user?id=${id}`, { method: 'DELETE' });
+        let response = await fetch(`/user/${id}`, { method: 'DELETE' });
         console.log('fetched', response);
         let parsed_response = await response.json();
         console.log("parsed_response", parsed_response);
