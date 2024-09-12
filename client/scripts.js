@@ -242,7 +242,7 @@ async function editeddata(event) {
             alert("updation failed")
         }
        
-        window.location = 'single-product.html'
+        window.location = `single-product.html?id=${id}`
 
         
         
